@@ -1,17 +1,32 @@
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/features/auth/auth-store";
 
-export const AppLayout = () => {
+export function AppLayout() {
+  const navigate = useNavigate();
+  const logout = useAuthStore((s) => s.logout);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
+
   return (
-    <div className="min-h-screen flex">
-      <aside className="w-60 bg-black text-white p-4 space-y-4">
-        <Link to="/retailer">Retailer</Link>
-        <Link to="/customer">Customer</Link>
-        <Link to="/admin">Admin</Link>
-      </aside>
+    <div className="min-h-screen">
+      {/* Simple header for now */}
+      <div className="flex items-center justify-between bg-black px-6 py-4 text-white">
+        <h1>weAR Portal</h1>
 
-      <main className="flex-1 p-8 bg-gray-50">
+        <button
+          onClick={handleLogout}
+          className="rounded bg-red-600 px-4 py-2 text-sm"
+        >
+          Logout
+        </button>
+      </div>
+
+      <div className="p-6">
         <Outlet />
-      </main>
+      </div>
     </div>
-  )
+  );
 }

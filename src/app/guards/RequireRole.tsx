@@ -1,16 +1,33 @@
-import { Navigate } from "react-router-dom"
+import { Navigate, useLocation } from "react-router-dom";
+import {
+  getHomePathForRole,
+  selectHasHydrated,
+  selectIsAuthenticated,
+  selectRole,
+  type UserRole,
+  useAuthStore,
+} from "@/features/auth/auth-store";
 
 type Props = {
-  role: "retailer" | "customer" | "admin"
-  children: React.ReactNode
-}
+  role: UserRole;
+  children: React.ReactNode;
+};
 
-export const RequireRole = ({ role, children }: Props) => {
-  const userRole = "retailer" // مؤقتاً
+export function RequireRole({ role: requiredRole, children }: Props) {
+  const location = useLocation();
+  const hasHydrated = useAuthStore(selectHasHydrated);
+  const isAuthenticated = useAuthStore(selectIsAuthenticated);
+  const role = useAuthStore(selectRole);
 
-  if (userRole !== role) {
-    return <Navigate to="/login" replace />
+  if (!hasHydrated) return null;
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  return children
+  if (!role || role !== requiredRole) {
+    return <Navigate to={role ? getHomePathForRole(role) : "/login"} replace />;
+  }
+
+  return <>{children}</>;
 }
