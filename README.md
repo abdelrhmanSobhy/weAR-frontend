@@ -1,73 +1,121 @@
-# React + TypeScript + Vite
+# weAR – Virtual Fitting Room SaaS Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Graduation Project – Role-Based SaaS Architecture with AI Integration
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📖 Overview
 
-## React Compiler
+**weAR** is a B2B SaaS platform that enhances online retail experiences using Virtual Fitting Room (VFR) technology.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The platform supports three user roles:
 
-## Expanding the ESLint configuration
+- 🛍 Retailers (B2B Dashboard)
+- 🛒 Customers (B2C Storefront)
+- 🔑 Super Admins (Platform Management)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This project demonstrates scalable frontend architecture, modular design, role-based routing, and AI feature integration.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🏗 Architecture Strategy
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+We implemented a **Single SPA + Domain-Driven Modular Architecture**.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Why this approach?
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Clean separation of concerns
+- Role-based isolation
+- Scalable structure
+- Graduation timeline friendly
+- Avoids over-engineering
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Each user role is treated as a mini-system inside a unified application.
+
+---
+
+## 👥 User Roles
+
+### 🛍 Retailer
+- Dashboard Analytics
+- Inventory Management
+- Subscription & Billing
+
+### 🛒 Customer
+- Product Browsing
+- Virtual Fitting Room
+- AI-based Style Recommendations
+
+### 🔑 Super Admin
+- Tenant Management
+- Platform Analytics
+
+---
+
+## 🛠 Tech Stack (Locked)
+
+| Category | Technology |
+|----------|------------|
+| Core | React 19 + Vite |
+| Language | TypeScript (strict) |
+| Routing | React Router v7 |
+| Server State | TanStack Query v5 |
+| Client State | Zustand |
+| Styling | Tailwind CSS v4 |
+| UI Primitives | Shadcn/UI |
+| Forms | React Hook Form |
+| Validation | Zod |
+| Testing | Vitest + React Testing Library |
+| Code Quality | ESLint + Prettier |
+
+---
+
+## 🚦 Routing Strategy
+
+- `/login`
+- `/signup`
+- `/retailer/*`
+- `/customer/*`
+- `/admin/*`
+
+Protected by:
+
+- `RequireAuth`
+- `RequireRole`
+
+---
+
+## 🗺 Development Phases
+
+### Phase 1 – Project Skeleton (done)
+- Routing
+- Layout system
+- Guards
+- Folder structure
+
+### Phase 2 – Authentication System (current)
+- Login / Signup
+- Role persistence
+- Protected routes
+
+### Phase 3 – Retailer Core
+- Inventory CRUD
+- Dashboard
+- Billing
+
+### Phase 4 – Customer Experience
+- Store UI
+- Virtual Fitting Demo
+- AI Recommendation
+
+### Phase 5 – Admin Portal
+- Tenant Management
+- Platform Analytics
+
+### Phase 6 – Polish & Testing
+- Loading states
+- Error handling
+- UX refinement
+- Unit tests
+
+---
