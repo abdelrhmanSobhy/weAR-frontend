@@ -319,8 +319,9 @@ export default function RetailerPricingPage() {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-white px-4 py-6 font-sans">
-      <header className="w-full text-center shrink-0 mb-6 xl:mb-10 mt-4">
+    // السر هنا: min-h-screen للموبايل عشان السكرول، و h-screen lg:overflow-hidden للديسكتوب عشان نمنع السكرول ونثبتها
+    <div className="flex min-h-screen lg:h-screen w-full flex-col items-center justify-center bg-white px-4 py-10 lg:py-6 font-sans lg:overflow-hidden">
+      <header className="w-full text-center shrink-0 mb-6 xl:mb-10 mt-4 lg:mt-0">
         <h1
           className="text-[#B6A092] mb-3 text-3xl md:text-[40px]"
           style={{
@@ -391,7 +392,7 @@ export default function RetailerPricingPage() {
             className="flex flex-col shrink-0 w-full max-w-[400px] h-full overflow-hidden bg-white relative transition-all duration-300"
             style={{ borderRadius: "25px", border: "1px solid #E4DCD1" }}
           >
-            <div className="flex flex-col flex-1 min-h-0 px-8 py-10">
+            <div className="flex flex-col flex-1 min-h-0 px-8 py-10 lg:py-6">
               <div className="text-center shrink-0 border-b border-[#F0EDEB] pb-6 mb-6">
                 <h3
                   style={{

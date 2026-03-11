@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useAuthStore } from "@/features/auth/auth-store";
+import { useAuthStore } from "@/features/auth/useAuthStore";
 import { AuthPageLayout } from "@/features/auth/components/AuthPageLayout";
 import loginPageImage from "@/assets/auth/loginpage.webp";
 import googleIcon from "@/assets/auth/google.svg";

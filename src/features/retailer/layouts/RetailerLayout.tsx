@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/features/auth/auth-store";
+import { useAuthStore } from "@/features/auth/useAuthStore";
 
 const linkBase = "block rounded px-3 py-2 text-sm transition hover:bg-gray-100";
 const linkActive = "bg-gray-200 font-medium";

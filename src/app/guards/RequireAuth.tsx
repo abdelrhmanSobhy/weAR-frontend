@@ -3,7 +3,7 @@ import {
   selectHasHydrated,
   selectIsAuthenticated,
   useAuthStore,
-} from "@/features/auth/auth-store";
+} from "@/features/auth/useAuthStore";
 
 type Props = { children: React.ReactNode };
 

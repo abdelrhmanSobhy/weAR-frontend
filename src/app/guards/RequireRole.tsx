@@ -6,7 +6,7 @@ import {
   selectRole,
   type UserRole,
   useAuthStore,
-} from "@/features/auth/auth-store";
+} from "@/features/auth/useAuthStore";
 
 type Props = {
   role: UserRole;

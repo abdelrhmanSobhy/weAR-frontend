@@ -3,10 +3,20 @@ import { persist } from "zustand/middleware";
 
 export type UserRole = "retailer" | "customer" | "admin";
 
+export interface RetailerData {
+  companyName: string;
+  planName: string;
+  planPrice: string;
+  billingCycle: string;
+}
+
 export type AuthUser = {
   id: string;
   email: string;
+  name: string; // الاسم الأساسي لليوزر
+  avatar?: string; // لو رفعنا صورة بروفايل بعدين
   role: UserRole;
+  retailerData?: RetailerData; // هتكون موجودة لو الـ role === 'retailer'
 };
 
 type AuthState = {
@@ -19,6 +29,7 @@ type AuthState = {
   setHasHydrated: (v: boolean) => void;
 
   login: (payload: AuthUser) => void;
+  updateUser: (payload: Partial<AuthUser>) => void;
   logout: () => void;
 };
 
@@ -40,6 +51,12 @@ export const useAuthStore = create<AuthState>()(
           role: user.role,
           isAuthenticated: true,
         });
+      },
+
+      updateUser: (data) => {
+        set((state) => ({
+          user: state.user ? { ...state.user, ...data } : null,
+        }));
       },
 
       logout: () => {
@@ -80,6 +97,8 @@ export const getHomePathForRole = (role: UserRole): string => {
       return "/customer";
     case "admin":
       return "/admin";
+    default:
+      return "/";
   }
 };
 

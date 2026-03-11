@@ -16,6 +16,8 @@ import stripeSvg from "@/assets/auth/payment/stripe.svg";
 import gpaySvg from "@/assets/auth/payment/gpay.svg";
 import bitpaySvg from "@/assets/auth/payment/bitpay.svg";
 
+import { useAuthStore } from "@/features/auth/useAuthStore";
+
 const paymentSchema = z.object({
   cardName: z.string().min(3, "Cardholder name is required"),
   cardNumber: z.string().regex(/^\d{16}$/, "Must be exactly 16 digits"),
@@ -35,12 +37,15 @@ export default function RetailerPaymentPage() {
   const location = useLocation();
   const [isProcessing, setIsProcessing] = useState(false);
 
+  const login = useAuthStore((state) => state.login);
+
   const planData = location.state?.finalSignupData || {
     plan: "Standard",
     desc: "For small to medium businesses",
     price: "150",
     billing: "Monthly",
     img: fallbackPlanImg,
+    businessName: "My Awesome Brand",
   };
 
   const form = useForm<PaymentFormValues>({
@@ -76,6 +81,20 @@ export default function RetailerPaymentPage() {
   const onSubmit = async (values: PaymentFormValues) => {
     setIsProcessing(true);
     await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    login({
+      id: "RET-" + Math.floor(Math.random() * 10000),
+      email: "admin@mybrand.com",
+      name: values.cardName,
+      role: "retailer",
+      retailerData: {
+        companyName: planData.businessName || "WeAR Brand",
+        planName: planData.plan,
+        planPrice: planData.price,
+        billingCycle: planData.billing,
+      },
+    });
+
     setIsProcessing(false);
     navigate("/retailer", { replace: true });
   };
@@ -116,17 +135,21 @@ export default function RetailerPaymentPage() {
   ];
 
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-[#FAFAFA] px-4 font-sans overflow-hidden">
-      <div className="flex w-full max-w-[1250px] h-[90vh] max-h-[850px] rounded-[24px] border border-[#E4DCD1] bg-white shadow-sm overflow-hidden">
-        <div className="flex-1 flex flex-col justify-center p-8 lg:p-10 border-r border-[#E4DCD1] bg-white">
+    <div className="flex min-h-screen w-full items-center justify-center bg-[#FAFAFA] px-4 py-10 font-sans">
+      <div className="flex flex-col lg:flex-row w-full max-w-[1250px] min-h-[90vh] lg:max-h-[850px] rounded-[24px] border border-[#E4DCD1] bg-white shadow-sm overflow-hidden">
+        <div className="flex-1 flex flex-col justify-start px-8 lg:px-[50px] lg:border-r border-b lg:border-b-0 border-[#E4DCD1] bg-white">
           <h1
-            className="text-[#B6A092] text-[32px] mb-5"
-            style={{ fontFamily: '"PT Serif", serif', fontWeight: 700 }}
+            className="text-[#B6A092] text-[32px] mt-[50px] mb-[50px]"
+            style={{
+              fontFamily: '"PT Serif", serif',
+              fontWeight: 700,
+              lineHeight: 1,
+            }}
           >
             Payment Method
           </h1>
 
-          <div className="flex flex-wrap gap-5 mb-6 pb-6 border-b border-[#F0EDEB]">
+          <div className="flex flex-wrap gap-x-[25px] mb-8 pb-8 border-b border-[#F0EDEB]">
             {paymentLogos.map((logo, i) => (
               <img
                 key={i}

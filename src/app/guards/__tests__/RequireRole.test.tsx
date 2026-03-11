@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import { RequireRole } from "@/app/guards/RequireRole";
-import { useAuthStore } from "@/features/auth/auth-store";
+import { useAuthStore } from "@/features/auth/useAuthStore";
 
 describe("RequireRole", () => {
   it("redirects when role mismatched", () => {

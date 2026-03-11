@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useAuthStore } from "@/features/auth/auth-store";
+import { useAuthStore } from "@/features/auth/useAuthStore";
 
 export function AuthDebugPanel() {
   const { pathname } = useLocation();
