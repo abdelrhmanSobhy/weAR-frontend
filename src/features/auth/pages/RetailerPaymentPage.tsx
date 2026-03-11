@@ -25,8 +25,8 @@ const paymentSchema = z.object({
   expiryDate: z
     .string()
     .regex(/^(0[1-9]|1[0-2])\/?([0-9]{2})$/, "MM/YY format required"),
-  saveDetails: z.boolean().default(false),
-  enableRecurring: z.boolean().default(true),
+  saveDetails: z.boolean().optional(),
+  enableRecurring: z.boolean().optional(),
   balanceThreshold: z.string().optional(),
 });
 

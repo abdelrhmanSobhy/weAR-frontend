@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import { RetailerLayout } from "@/features/retailer/layouts/RetailerLayout";
+import "@testing-library/jest-dom";
 
 describe("RetailerLayout", () => {
   it("renders sidebar links and outlet content", () => {

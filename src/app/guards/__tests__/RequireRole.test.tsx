@@ -3,6 +3,7 @@ import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import { RequireRole } from "@/app/guards/RequireRole";
 import { useAuthStore } from "@/features/auth/useAuthStore";
+import "@testing-library/jest-dom";
 
 describe("RequireRole", () => {
   it("redirects when role mismatched", () => {
