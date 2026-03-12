@@ -12,19 +12,7 @@ export function AppLayout() {
 
   return (
     <div className="min-h-screen">
-      {/* Simple header for now */}
-      <div className="flex items-center justify-between bg-black px-6 py-4 text-white">
-        <h1>weAR Portal</h1>
-
-        <button
-          onClick={handleLogout}
-          className="rounded bg-red-600 px-4 py-2 text-sm"
-        >
-          Logout
-        </button>
-      </div>
-
-      <div className="p-6">
+      <div className="">
         <Outlet />
       </div>
     </div>

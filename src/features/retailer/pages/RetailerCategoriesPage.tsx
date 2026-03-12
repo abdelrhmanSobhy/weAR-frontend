@@ -8,100 +8,53 @@ import {
   Plus,
 } from "lucide-react";
 
-const poloImg =
+const topsImg =
   "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=100";
-const jacketImg =
-  "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=100";
-const pantsImg =
+const bottomsImg =
   "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=100";
-const shirtImg =
-  "https://images.unsplash.com/photo-1596755094514-f87e32f6b717?w=100";
-const tshirtImg =
-  "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=100";
+const jacketsImg =
+  "https://images.unsplash.com/photo-1576871333020-2210674ef827?w=100";
 
-const baseProducts = [
+const baseData = [
   {
-    name: "Polo Neck Sweatshirt",
-    category: "Tops & Shirts",
-    barcode: "080819822797",
-    price: "920 EGP",
+    name: "Tops & Shirts",
+    desc: "Find your perfect fit across all upper wear. Visualize ...",
+    date: "1/12/2025",
     status: "ACTIVE",
-    image: poloImg,
+    img: topsImg,
   },
   {
-    name: "Leather Jacket",
-    category: "Jacket",
-    barcode: "080819822797",
-    price: "1860 EGP",
-    status: "ACTIVE",
-    image: jacketImg,
+    name: "Bottoms & Pants",
+    desc: "Discover bottoms that complement your shape ...",
+    date: "1/12/2025",
+    status: "INACTIVE",
+    img: bottomsImg,
   },
   {
-    name: "Pants",
-    category: "Bottoms & Pants",
-    barcode: "080819822797",
-    price: "680 EGP",
+    name: "Jackets",
+    desc: "Try on one-piece wonders without the fitting room ...",
+    date: "1/12/2025",
     status: "ACTIVE",
-    image: pantsImg,
-  },
-  {
-    name: "Shirt",
-    category: "Tops & Shirts",
-    barcode: "080819822797",
-    price: "740 EGP",
-    status: "ACTIVE",
-    image: shirtImg,
-  },
-  {
-    name: "Polo T-shirt",
-    category: "Tops & Shirts",
-    barcode: "080819822797",
-    price: "890 EGP",
-    status: "ACTIVE",
-    image: tshirtImg,
+    img: jacketsImg,
   },
 ];
 
-const INITIAL_PRODUCTS = Array.from({ length: 12 }).map((_, i) => {
-  const base = baseProducts[i % 5];
+const INITIAL_CATEGORIES = Array.from({ length: 13 }).map((_, i) => {
+  const base = baseData[i % 3];
   return {
     id: String(i + 1),
     name: base.name,
-    category: base.category,
-    barcode: base.barcode,
-    price: base.price,
+    description: base.desc,
+    createdDate: base.date,
     status: base.status,
-    image: base.image,
+    image: base.img,
   };
 });
 
-const BarcodeDisplay = ({ value }: { value: string }) => (
-  <div className="flex flex-col items-center w-[90px]">
-    <div className="flex w-full h-[22px] justify-between">
-      <div className="w-[3px] bg-[#5C5550] h-full"></div>
-      <div className="w-[1px] bg-[#5C5550] h-full"></div>
-      <div className="w-[4px] bg-[#5C5550] h-full"></div>
-      <div className="w-[2px] bg-[#5C5550] h-full"></div>
-      <div className="w-[3px] bg-[#5C5550] h-full"></div>
-      <div className="w-[1px] bg-[#5C5550] h-full"></div>
-      <div className="w-[4px] bg-[#5C5550] h-full"></div>
-      <div className="w-[2px] bg-[#5C5550] h-full"></div>
-      <div className="w-[1px] bg-[#5C5550] h-full"></div>
-      <div className="w-[3px] bg-[#5C5550] h-full"></div>
-      <div className="w-[2px] bg-[#5C5550] h-full"></div>
-      <div className="w-[1px] bg-[#5C5550] h-full"></div>
-      <div className="w-[4px] bg-[#5C5550] h-full"></div>
-    </div>
-    <span className="text-[8px] text-[#5C5550] tracking-[0.2em] mt-1">
-      {value}
-    </span>
-  </div>
-);
-
-export function RetailerProductsListPage() {
+export function RetailerCategoriesPage() {
   const [activeTab, setActiveTab] = useState<"view" | "create">("view");
-  const [products, setProducts] = useState(INITIAL_PRODUCTS);
-  const [editingProduct, setEditingProduct] = useState<any>(null);
+  const [categories, setCategories] = useState(INITIAL_CATEGORIES);
+  const [editingCategory, setEditingCategory] = useState<any>(null);
   const [deleteModal, setDeleteModal] = useState({
     isOpen: false,
     id: "",
@@ -112,23 +65,23 @@ export function RetailerProductsListPage() {
   const itemsPerPage = 10;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const currentItems = categories.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(categories.length / itemsPerPage);
 
   const confirmDelete = () => {
-    setProducts(products.filter((p) => p.id !== deleteModal.id));
+    setCategories(categories.filter((c) => c.id !== deleteModal.id));
     setDeleteModal({ isOpen: false, id: "", name: "" });
   };
 
-  const handleCreateOrUpdate = (newProduct: any) => {
-    if (editingProduct) {
-      setProducts(
-        products.map((p) => (p.id === editingProduct.id ? newProduct : p)),
+  const handleCreateOrUpdate = (newCategory: any) => {
+    if (editingCategory) {
+      setCategories(
+        categories.map((c) => (c.id === editingCategory.id ? newCategory : c)),
       );
     } else {
-      setProducts([newProduct, ...products]);
+      setCategories([newCategory, ...categories]);
     }
-    setEditingProduct(null);
+    setEditingCategory(null);
     setActiveTab("view");
     setCurrentPage(1);
   };
@@ -138,14 +91,14 @@ export function RetailerProductsListPage() {
       {deleteModal.isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
           <div className="w-full max-w-[400px] rounded-[24px] bg-white p-6 md:p-8 text-center shadow-2xl">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#FFE4E4] text-[#F06161]">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-50 text-[#F06161]">
               <Trash2 size={32} />
             </div>
             <h3 className="text-[20px] font-bold text-[#5C5550]">
-              Delete Product
+              Delete Category
             </h3>
             <p className="mt-2 text-[14px] text-[#949E96]">
-              Are you sure you want to delete the product <br />
+              Are you sure you want to delete the category <br />
               <span className="font-bold text-[#5C5550]">
                 "{deleteModal.name}"
               </span>
@@ -175,7 +128,7 @@ export function RetailerProductsListPage() {
         <button
           onClick={() => {
             setActiveTab("view");
-            setEditingProduct(null);
+            setEditingCategory(null);
             setCurrentPage(1);
           }}
           className="flex-1 py-3 text-[16px] md:text-[18px] font-bold transition-all rounded-[12px]"
@@ -185,7 +138,7 @@ export function RetailerProductsListPage() {
             border: activeTab === "view" ? "none" : "1px solid #E4DCD1",
           }}
         >
-          View Products
+          View Categories
         </button>
         <button
           onClick={() => setActiveTab("create")}
@@ -196,7 +149,7 @@ export function RetailerProductsListPage() {
             border: activeTab === "create" ? "none" : "1px solid #E4DCD1",
           }}
         >
-          {editingProduct ? "Edit Product" : "Create Product"}
+          Create Category
         </button>
       </div>
 
@@ -206,59 +159,57 @@ export function RetailerProductsListPage() {
             className="mb-6 md:mb-8 text-[20px] md:text-[24px] font-medium text-[#C9A390]"
             style={{ fontFamily: '"PT Serif", serif' }}
           >
-            All Products
+            All Categories
           </h2>
 
           <div className="w-full overflow-x-auto pb-4">
-            <table className="w-full border-collapse min-w-[900px]">
+            <table className="w-full border-collapse min-w-[800px]">
               <thead>
                 <tr className="border-b border-[#F0EDEB] text-left text-[12px] font-bold text-[#C9A390] uppercase">
-                  <th className="pb-4 pl-2 w-[25%]">NAME</th>
-                  <th className="pb-4 w-[20%]">CATEGORY</th>
-                  <th className="pb-4 w-[20%]">BARCODE</th>
-                  <th className="pb-4 w-[15%]">STATUS</th>
-                  <th className="pb-4 w-[10%]">PRICE</th>
-                  <th className="pb-4 pr-2 text-center w-[10%]">ACTIONS</th>
+                  <th className="pb-4 pl-2 w-1/4">NAME</th>
+                  <th className="pb-4 w-1/3">DESCRIPTION</th>
+                  <th className="pb-4 w-1/6">CREATED</th>
+                  <th className="pb-4 w-1/6">STATUS</th>
+                  <th className="pb-4 pr-2 text-center w-auto">ACTIONS</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#F0EDEB]">
-                {currentItems.map((product) => (
+                {currentItems.map((category) => (
                   <tr
-                    key={product.id}
+                    key={category.id}
                     className="group hover:bg-[#FDFCFB] transition-colors border-b border-[#F0EDEB] last:border-none"
                   >
                     <td className="py-4 md:py-5 pl-2">
                       <div className="flex items-center gap-3 md:gap-4">
                         <img
-                          src={product.image}
+                          src={category.image}
                           className="h-10 w-10 md:h-12 md:w-12 rounded-[10px] object-cover border border-[#E4DCD1] shrink-0"
                         />
                         <span className="text-[13px] md:text-[14px] font-bold text-[#5C5550] whitespace-nowrap">
-                          {product.name}
+                          {category.name}
                         </span>
                       </div>
                     </td>
-                    <td className="py-4 md:py-5 text-[12px] md:text-[13px] font-medium text-[#949E96] whitespace-nowrap">
-                      {product.category}
+                    <td className="py-4 md:py-5 pr-4">
+                      <p className="text-[11px] md:text-[12px] text-[#949E96] leading-tight line-clamp-2 max-w-[280px]">
+                        {category.description}
+                      </p>
                     </td>
-                    <td className="py-4 md:py-5">
-                      <BarcodeDisplay value={product.barcode} />
+                    <td className="py-4 md:py-5 text-[12px] md:text-[13px] font-bold text-[#5C5550] whitespace-nowrap">
+                      {category.createdDate}
                     </td>
                     <td className="py-4 md:py-5">
                       <span
-                        className={`inline-flex items-center rounded-full px-2 md:px-3 py-1 text-[9px] md:text-[10px] font-bold whitespace-nowrap ${product.status === "ACTIVE" ? "bg-[#E0F2E9] text-[#4CAF50]" : "bg-[#FFE4E4] text-[#F06161]"}`}
+                        className={`inline-flex items-center rounded-full px-2 md:px-3 py-1 text-[9px] md:text-[10px] font-bold whitespace-nowrap ${category.status === "ACTIVE" ? "bg-[#E0F2E9] text-[#4CAF50]" : "bg-[#FFE4E4] text-[#F06161]"}`}
                       >
-                        ● {product.status}
+                        ● {category.status}
                       </span>
-                    </td>
-                    <td className="py-4 md:py-5 text-[12px] md:text-[13px] font-bold text-[#949E96] whitespace-nowrap">
-                      {product.price}
                     </td>
                     <td className="py-4 md:py-5 text-center">
                       <div className="flex justify-center gap-2 md:gap-3 text-[#BFC7DE]">
                         <button
                           onClick={() => {
-                            setEditingProduct(product);
+                            setEditingCategory(category);
                             setActiveTab("create");
                           }}
                           className="hover:text-[#B6A092] transition-colors"
@@ -269,8 +220,8 @@ export function RetailerProductsListPage() {
                           onClick={() =>
                             setDeleteModal({
                               isOpen: true,
-                              id: product.id,
-                              name: product.name,
+                              id: category.id,
+                              name: category.name,
                             })
                           }
                           className="hover:text-[#F06161] transition-colors"
@@ -316,8 +267,8 @@ export function RetailerProductsListPage() {
           </div>
         </div>
       ) : (
-        <CreateProductForm
-          initialData={editingProduct}
+        <CreateCategoryForm
+          initialData={editingCategory}
           onSave={handleCreateOrUpdate}
           onCancel={() => setActiveTab("view")}
         />
@@ -326,16 +277,9 @@ export function RetailerProductsListPage() {
   );
 }
 
-function CreateProductForm({ initialData, onSave, onCancel }: any) {
+function CreateCategoryForm({ initialData, onSave, onCancel }: any) {
   const [formData, setFormData] = useState(
-    initialData || {
-      name: "",
-      category: "Tops & Shirts",
-      barcode: "080819822797",
-      price: "",
-      status: "ACTIVE",
-      image: "",
-    },
+    initialData || { name: "", description: "", status: "ACTIVE", image: "" },
   );
 
   const inputStyle =
@@ -348,9 +292,8 @@ function CreateProductForm({ initialData, onSave, onCancel }: any) {
     onSave({
       ...formData,
       id: initialData?.id || Date.now().toString(),
-      price: formData.price.includes("EGP")
-        ? formData.price
-        : `${formData.price} EGP`,
+      createdDate:
+        initialData?.createdDate || new Date().toLocaleDateString("en-GB"),
     });
   };
 
@@ -363,66 +306,34 @@ function CreateProductForm({ initialData, onSave, onCancel }: any) {
         className="text-[20px] md:text-[24px] font-medium text-[#C9A390]"
         style={{ fontFamily: '"PT Serif", serif' }}
       >
-        {initialData ? "Edit Product" : "Create New Product"}
+        {initialData ? "Edit Category" : "Create New Category"}
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-        <div>
-          <label className={labelStyle}>Product Name *</label>
-          <input
-            type="text"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className={inputStyle}
-            required
-          />
-        </div>
-        <div>
-          <label className={labelStyle}>Category *</label>
-          <select
-            value={formData.category}
-            onChange={(e) =>
-              setFormData({ ...formData, category: e.target.value })
-            }
-            className={inputStyle}
-          >
-            <option value="Tops & Shirts">Tops & Shirts</option>
-            <option value="Bottoms & Pants">Bottoms & Pants</option>
-            <option value="Jacket">Jacket</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-        <div>
-          <label className={labelStyle}>Barcode *</label>
-          <input
-            type="text"
-            value={formData.barcode}
-            onChange={(e) =>
-              setFormData({ ...formData, barcode: e.target.value })
-            }
-            className={inputStyle}
-            required
-          />
-        </div>
-        <div>
-          <label className={labelStyle}>Price *</label>
-          <input
-            type="text"
-            value={formData.price}
-            onChange={(e) =>
-              setFormData({ ...formData, price: e.target.value })
-            }
-            className={inputStyle}
-            placeholder="e.g. 920"
-            required
-          />
-        </div>
+      <div>
+        <label className={labelStyle}>Category Name *</label>
+        <input
+          type="text"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          className={inputStyle}
+          required
+        />
       </div>
 
       <div>
-        <label className={labelStyle}>Product Image *</label>
+        <label className={labelStyle}>Description</label>
+        <textarea
+          value={formData.description}
+          onChange={(e) =>
+            setFormData({ ...formData, description: e.target.value })
+          }
+          className={`${inputStyle} h-[80px] md:h-[120px] py-3 resize-none`}
+          placeholder="Write a description ..."
+        />
+      </div>
+
+      <div>
+        <label className={labelStyle}>Cover Image *</label>
         <div className="rounded-[20px] border border-[#E4DCD1] p-4 md:p-6 bg-[#FEF9F2]/30">
           <div className="flex gap-4">
             {formData.image && (
@@ -485,7 +396,7 @@ function CreateProductForm({ initialData, onSave, onCancel }: any) {
           type="submit"
           className="h-[45px] md:h-[50px] w-full sm:w-auto px-10 md:px-12 rounded-[12px] bg-[#C9A390] text-white font-bold hover:opacity-90 order-1 sm:order-2"
         >
-          {initialData ? "Update Product" : "Create Product"}
+          {initialData ? "Update Category" : "Create Category"}
         </button>
       </div>
     </form>

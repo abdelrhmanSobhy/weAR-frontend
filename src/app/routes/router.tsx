@@ -21,12 +21,16 @@ import { RequireRole } from "../guards/RequireRole";
 import { RetailerLayout } from "@/features/retailer/layouts/RetailerLayout";
 import { RetailerDashboardPage } from "@/features/retailer/pages/RetailerDashboardPage";
 import { RetailerProductsListPage } from "@/features/retailer/pages/RetailerProductsListPage";
-import { RetailerProductCreatePage } from "@/features/retailer/pages/RetailerProductCreatePage";
-import { RetailerProductEditPage } from "@/features/retailer/pages/RetailerProductEditPage";
-import { RetailerSettingsPage } from "@/features/retailer/pages/RetailerSettingsPage";
+import { RetailerOrdersPage } from "@/features/retailer/pages/RetailerOrdersPage";
+// import { RetailerSettingsPage } from "@/features/retailer/pages/RetailerPricingPage";
+import { RetailerOffersPage } from "@/features/retailer/pages/RetailerOffersPage";
+import { RetailerCategoriesPage } from "@/features/retailer/pages/RetailerCategoriesPage";
+import { RetailerEditPricingPage } from "@/features/retailer/pages/RetailerEditPricingPage";
+import { RetailerHelpPage } from "@/features/retailer/pages/RetailerHelpPage";
 
 // --- Common Pages ---
 import { ComingSoonPage } from "@/features/common/pages/ComingSoonPage";
+import { RetailerInventoryPage } from "@/features/retailer/pages/RetailerInventoryPage";
 
 const router = createBrowserRouter([
   // ==========================================
@@ -66,10 +70,14 @@ const router = createBrowserRouter([
         ),
         children: [
           { index: true, element: <RetailerDashboardPage /> },
+          { path: "offers", element: <RetailerOffersPage /> },
+          { path: "categories", element: <RetailerCategoriesPage /> },
           { path: "products", element: <RetailerProductsListPage /> },
-          { path: "products/new", element: <RetailerProductCreatePage /> },
-          { path: "products/:id/edit", element: <RetailerProductEditPage /> },
-          { path: "settings", element: <RetailerSettingsPage /> },
+          { path: "orders", element: <RetailerOrdersPage /> },
+          { path: "inventory", element: <RetailerInventoryPage /> },
+          { path: "pricing", element: <RetailerEditPricingPage /> },
+          { path: "help", element: <RetailerHelpPage /> },
+          // { path: "settings", element: <RetailerSettingsPage /> },
         ],
       },
 

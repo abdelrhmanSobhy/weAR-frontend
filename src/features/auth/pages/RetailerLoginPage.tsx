@@ -33,7 +33,19 @@ export default function RetailerLoginPage() {
   });
 
   const onSubmit = async (values: LoginFormValues) => {
-    login({ id: crypto.randomUUID(), email: values.email, role: "retailer" });
+    login({
+      id: crypto.randomUUID(),
+      email: values.email,
+      name: "Mohamed Ahmed",
+      role: "retailer",
+      retailerData: {
+        companyName: "Cavo",
+        planName: "Standard",
+        planPrice: "1440",
+        billingCycle: "Yearly",
+      },
+    });
+
     navigate(fromPath || "/retailer", { replace: true });
   };
 
