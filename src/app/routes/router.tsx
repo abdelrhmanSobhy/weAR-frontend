@@ -2,6 +2,7 @@ import {
   createBrowserRouter,
   RouterProvider,
   Navigate,
+  Outlet,
 } from "react-router-dom";
 import { AuthLayout } from "@/components/layout/AuthLayout";
 import { AppLayout } from "@/components/layout/AppLayout";
@@ -27,6 +28,15 @@ import { RetailerOffersPage } from "@/features/retailer/pages/RetailerOffersPage
 import { RetailerCategoriesPage } from "@/features/retailer/pages/RetailerCategoriesPage";
 import { RetailerEditPricingPage } from "@/features/retailer/pages/RetailerEditPricingPage";
 import { RetailerHelpPage } from "@/features/retailer/pages/RetailerHelpPage";
+
+// --- Super Admin Pages --- // [تم إضافة صفحاتك هنا]
+import { DashBoardAdmin } from "@/features/admin/pages/DashBoardAdmin";
+import { TenantsPage } from "@/features/admin/pages/TenantsPage";
+import { SubscriptionPlansPage } from "@/features/admin/pages/SubscriptionPlansPage";
+import { ChatSupport } from "@/features/admin/pages/ChatSupport";
+import { SettingsPage } from "@/features/admin/pages/SettingsPage";
+import { RoleAccessPage } from "@/features/admin/pages/RoleAccessPage";
+import { UserManagementPage } from "@/features/admin/pages/UserManagementPage";
 
 // --- Common Pages ---
 import { ComingSoonPage } from "@/features/common/pages/ComingSoonPage";
@@ -61,6 +71,7 @@ const router = createBrowserRouter([
       </RequireAuth>
     ),
     children: [
+      // --- Retailer Routes ---
       {
         path: "/retailer",
         element: (
@@ -81,8 +92,27 @@ const router = createBrowserRouter([
         ],
       },
 
+      // --- Super Admin Routes ---
+      {
+        path: "/admin",
+        element: (
+          <RequireRole role="admin">
+            <Outlet />
+          </RequireRole>
+        ),
+        children: [
+          { index: true, element: <DashBoardAdmin /> },
+          { path: "brands", element: <TenantsPage /> },
+          { path: "plans", element: <SubscriptionPlansPage /> },
+          { path: "chat", element: <ChatSupport /> },
+          { path: "settings", element: <SettingsPage /> },
+          { path: "roles", element: <RoleAccessPage /> },
+          { path: "users", element: <UserManagementPage /> },
+        ],
+      },
+
       { path: "/customer", element: <ComingSoonPage /> },
-      { path: "/admin", element: <ComingSoonPage /> },
+      // { path: "/admin", element: <ComingSoonPage /> }, 
     ],
   },
 
