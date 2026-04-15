@@ -32,7 +32,7 @@ export default function RetailerLoginPage() {
     defaultValues: { email: "", password: "", remember: true },
   });
 
-  const onSubmit = async (values: LoginFormValues) => {
+ /* const onSubmit = async (values: LoginFormValues) => {
     login({
       id: crypto.randomUUID(),
       email: values.email,
@@ -47,8 +47,30 @@ export default function RetailerLoginPage() {
     });
 
     navigate(fromPath || "/retailer", { replace: true });
-  };
+  };*/
+const onSubmit = async (values: LoginFormValues) => {
+    const isLoggingAsAdmin = values.email.includes("admin");
 
+    login({
+      id: crypto.randomUUID(),
+      email: values.email,
+      name: isLoggingAsAdmin ? "Super Admin" : "Mohamed Ahmed",
+      role: isLoggingAsAdmin ? "admin" : "retailer", 
+      retailerData: {
+        companyName: "Cavo",
+        planName: "Standard",
+        planPrice: "1440",
+        billingCycle: "Yearly",
+      },
+    });
+
+    if (isLoggingAsAdmin) {
+      navigate("/admin", { replace: true });
+    } else {
+      navigate("/retailer", { replace: true });
+    }
+  };
+  
   return (
     <AuthPageLayout imageSrc={loginPageImage} imageAlt="Login visual">
       <header className="text-center mb-8">
