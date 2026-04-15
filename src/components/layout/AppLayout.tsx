@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuthStore, selectRole } from "@/features/auth/useAuthStore"; 
-import SideBar from "@/shared/components/SideBar";
-import NavBar from "@/shared/components/NavBar";
-import Footer from "@/shared/components/Footer";
+import SideBar from "../../features/shared/components/SideBar";
+import NavBar from "../../features/shared/components/NavBar";
+import Footer from "../../features/shared/components/Footer";
 
 export function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
